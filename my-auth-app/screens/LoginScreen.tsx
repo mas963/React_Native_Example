@@ -1,21 +1,27 @@
-import { StatusBar } from "expo-status-bar";
-import { useState } from "react"
-import { KeyboardAvoidingView, Platform, ScrollView, View, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../App';
 
-const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
+type LoginScreenProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'Login'>;
+};
+
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1 bg-white"
     >
       <StatusBar style="dark" />
       <ScrollView contentContainerClassName="flex-grow">
         <View className="flex-1 justify-center px-8 pt-10 pb-8">
-          {/* Logo and title */}
+          {/* Logo and Title */}
           <View className="items-center mb-8">
             <View className="w-20 h-20 bg-blue-500 rounded-full items-center justify-center mb-4">
               <Text className="text-white text-3xl font-bold">A</Text>
@@ -24,7 +30,7 @@ const LoginScreen = ({ navigation }) => {
             <Text className="text-sm text-gray-500 mt-1">Sign in to continue</Text>
           </View>
 
-          {/* Input fields */}
+          {/* Input Fields */}
           <View className="mb-6">
             <Text className="text-sm font-medium text-gray-700 mb-1">Email</Text>
             <View className="flex-row border border-gray-300 rounded-lg px-4 py-3 bg-gray-50">
@@ -40,12 +46,13 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           <View className="mb-6">
-            <Text className="text-sm font-medium text-gray-700 mb-1">Email</Text>
+            <Text className="text-sm font-medium text-gray-700 mb-1">Password</Text>
             <View className="flex-row border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 items-center">
               <TextInput
                 placeholder="Enter your password"
                 value={password}
                 onChangeText={setPassword}
+                secureTextEntry={secureTextEntry}
                 className="flex-1 text-base text-gray-800"
               />
               <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)}>
@@ -60,6 +67,7 @@ const LoginScreen = ({ navigation }) => {
             <Text className="text-blue-500 font-medium">Forgot Password?</Text>
           </TouchableOpacity>
 
+          {/* Login Button */}
           <TouchableOpacity
             className="bg-blue-500 py-4 rounded-lg items-center mb-6"
             onPress={() => navigation.navigate('Home')}
@@ -67,7 +75,7 @@ const LoginScreen = ({ navigation }) => {
             <Text className="text-white font-bold text-base">Login</Text>
           </TouchableOpacity>
 
-          {/* social login */}
+          {/* Social Login */}
           <View className="mb-6">
             <View className="flex-row items-center mb-4">
               <View className="flex-1 h-0.5 bg-gray-200" />
@@ -88,9 +96,9 @@ const LoginScreen = ({ navigation }) => {
             </View>
           </View>
 
-          {/* register link */}
+          {/* Register Link */}
           <View className="flex-row justify-center">
-            <Text className="text-gray-600">Don't have an account?</Text>
+            <Text className="text-gray-600">Don't have an account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Register')}>
               <Text className="text-blue-500 font-medium">Register</Text>
             </TouchableOpacity>
