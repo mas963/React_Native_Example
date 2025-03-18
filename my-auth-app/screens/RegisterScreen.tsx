@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../App';
+import { RootStackParamList } from 'types/navigation';
 
-type RegisterScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Register'>;
-};
-
-const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
+const RegisterScreen = () => {
   const [fullName, setFullName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
   const [secureConfirmTextEntry, setSecureConfirmTextEntry] = useState<boolean>(true);
+
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (
     <KeyboardAvoidingView
@@ -114,7 +113,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
           {/* Register Button */}
           <TouchableOpacity
             className="bg-blue-500 py-4 rounded-lg items-center mb-6"
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate('Main')}
           >
             <Text className="text-white font-bold text-base">Create Account</Text>
           </TouchableOpacity>

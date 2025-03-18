@@ -1,13 +1,19 @@
-import React from 'react';
+import { useAuth } from 'context/AuthContext';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../App';
 
 type HomeScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Home'>;
+  navigation: any;
 };
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigation.navigate('Login');
+  }
+
   return (
     <View className="flex-1 justify-center items-center bg-white p-8">
       <Text className="text-2xl font-bold text-gray-800 mb-4">Welcome to the App!</Text>
@@ -16,7 +22,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       </Text>
       <TouchableOpacity
         className="bg-blue-500 py-3 px-6 rounded-lg"
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => handleLogout()}
       >
         <Text className="text-white font-medium">Log Out</Text>
       </TouchableOpacity>

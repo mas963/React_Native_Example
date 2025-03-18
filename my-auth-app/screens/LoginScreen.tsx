@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { useAuth } from 'context/AuthContext';
+import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../App';
+import { RootStackParamList } from 'types/navigation';
 
-type LoginScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Login'>;
-};
-
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
+const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
+
+  const { login } = useAuth();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const handleLogin = () => {
+    login();
+    navigation.navigate('Main');
+  }
 
   return (
     <KeyboardAvoidingView
@@ -70,7 +76,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
           {/* Login Button */}
           <TouchableOpacity
             className="bg-blue-500 py-4 rounded-lg items-center mb-6"
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => handleLogin()}
           >
             <Text className="text-white font-bold text-base">Login</Text>
           </TouchableOpacity>
